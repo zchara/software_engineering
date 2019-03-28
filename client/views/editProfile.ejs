@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Το προφίλ μου</title>
+
+    <!-- Bootstrap CDNS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+	<script type="text/javascript" src="includes/js/angular.min.js"></script>
+	<script type="text/javascript" src="includes/js/angular-route.min.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.js"></script>
+	<script src="includes/controllers/users.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="includes/css/carousel.css" rel="stylesheet">
+    <link href="includes/css/style.css" rel="stylesheet">
+  </head>
+  
+  <body ng-app="myApp" ng-controller="UsersController" ng-init="view_profile()">
+
+    <header ng-cloak>
+      <%- include('./includes/html/nav_logged.ejs'); %>
+    </header>
+
+    <br><br><br>
+
+    <div class="container"  >     <!--SOS  ng-submit="ALLAGHHH!!()"-->
+      <h2 class="d-flex justify-content-left">Το προφίλ μου</h2>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+            <h4 class="d-flex justify-content-center">Τα κατορθώματά μου</h4>
+            <hr>
+            <div class="row">
+              <h4 class="col-4">Επίπεδο:</h4>
+            </div>
+            <div class="row">
+              <p class="col-8 d-flex justify-content-left" id="level">🔼 {{data_view.user.achievements.level}}</p> 
+            </div>
+            <!--LEVELS: NOVICE -> APPRENTICE -> ATHLETE STAR -> AMBASSADOR 
+                ΕΛΛΗΝΙΚΑ: ΑΡΧΑΡΙΟΣ -> ΜΑΘΗΤΕΥΟΜΕΝΟΣ -> ΕΡΑΣΙΤΕΧΝΗΣ -> ΑΣΤΕΡΙ --> 
+          
+            <div class="row">
+              <h4 class="col-4">Εμβλήματα</h4>
+            </div>
+            <div class="row">
+              <ul id="badges" class="list-group">
+                <li class="list-group-item" ng-show="data_view.user.achievements.explorer">🏆 Εξερευνητής</li>
+                <li class="list-group-item" ng-show="data_view.user.achievements.teamplayer">🏆 Ομαδικός παίχτης</li>
+                <li class="list-group-item" ng-show="data_view.user.achievements.colombus">🏆 Κολόμβος του αθλητισμού</li>
+                <li class="list-group-item" ng-show="data_view.user.achievements.amphibious">🏆 Αμφίβιος</li>
+                <li class="list-group-item" ng-show="data_view.user.achievements.multi_sportscenters">🏆 Γυρολόγος</li>
+                <li class="list-group-item" ng-show="data_view.user.achievements.allaround">🏆 Λίγο απ'ολα</li>
+              </ul>
+              
+              <!--BADGES: allaround, multisportscenters, colombus, explorer, amphibious, teamplayer
+              ΕΛΛΗΝΙΚΑ: ΛΙΓΟ ΑΠ' ΟΛΑ, ΑΘΛΗΤΙΚΑ ΚΕΝΤΡΑ, ΚΟΛΟΜΒΟΣ, ΕΞΕΡΕΥΝΗΤΗΣ, ΑΜΦΙΒΙΟ, ΟΜΑΔΑΡΧΗΣ -->
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-8">
+          <div class="personal-info">
+            <h4 class="d-flex justify-content-center">Επεξεργασία προσωπικών στοιχείων</h4>
+            <hr>
+
+            <form class="form-horizontal" role="form"   ng-submit="change_profile()">
+                <div class="row form-group">
+                  <label class="col-lg-4 control-label">Όνομα:</label> 
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" value={{data_view.user.first_name}} ng-model="data_view.user.first_name">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label class="col-lg-4 control-label">Επώνυμο:</label> 
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" value={{data_view.user.surname}} ng-model="data_view.user.surname">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label class="col-lg-4 control-label">Όνομα χρήστη:</label> 
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" value={{data_view.user.username}} ng-model="data_view.user.username">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label class="col-lg-4 control-label">Email:</label> 
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" value={{data_view.user.email}} ng-model="data_view.user.email">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label class="col-lg-4 control-label">Ημερομηνία γέννησης:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" value={{data_view.user.birth_date}} ng-model="data_view.user.birth_date" id="b_date">
+                    <div class="invalid-feedback">
+                    Ουπς! Κάτι πήγε στραβά. Παρακαλούμε εισάγετε ξανά την ημερομηνία γέννησης σε μορφή "EEEE-MM-HH".
+                    </div>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label class="col-md-4 control-label">Νέος κωδικός πρόσβασης: </label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="password" value="" ng-model="data_view.user.pswd1" id="first_pswd">
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label class="col-md-4 control-label">Επιβεβαίωση κωδικού: </label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="password" value="" ng-model="data_view.user.pswd2" id="second_pswd">
+                    <div class="invalid-feedback">
+                    Ουπς! Κάτι πήγε στραβά. Παρακαλούμε εισάγετε ξανά τον κωδικό πρόσβασης.
+                    </div>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-lg-6"></div>
+                  <div class="col-lg-4">
+                    <button class="btn btn-primary d-flex justify-content-right" type="submit">Αποθήκευση αλλαγών</button>
+                  </div> 
+                  <div class="col-lg-2">
+                    <input type="reset" class="btn btn-default" value="Ακύρωση" ng-click="change_profile_cancel()">
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <br>
+    <br>
+    <%- include('./includes/html/footer.ejs'); %>
+    
+</body>
+</html>

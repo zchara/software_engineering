@@ -1,0 +1,168 @@
+/* FONT SIZE & COLOR */
+
+body, input, select, button, label, textarea, ul, li {
+    color: #333;
+    font-size: 17px;
+}
+.page-footer h5 {
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.page-footer img {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    float: right;
+}
+.page-footer a:link {
+    color: white;
+}
+.page-footer a:visited {
+    color: white;
+}
+/ .page-footer a:hover {
+    color: red;
+    text-decoration: underline;
+}
+.page-footer a:active {
+    color: white;
+    text-decoration: underline;
+}
+@media (max-width: 767px) {
+    .page-footer h5 {
+        color: white;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .page-footer li {
+        text-align: center;
+    }
+    .page-footer img {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        float: center;
+    }
+}
+/* FIELD SIZES */
+
+input, option {
+    height: 40px;
+}
+/*
+button {
+  height: 40px;
+}*/
+
+textarea {
+    min-height: 100px;
+}
+img {
+    max-width: 100%;
+}
+/* ALIGNMENTS */
+
+p, h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+}
+label {
+    text-align: left;
+}
+ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+a:hover {
+    text-decoration: none;
+}
+:focus {
+    outline: none;
+}
+.row {
+    margin: 10px;
+}
+.wrapper {
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+}
+.inner {
+    padding: 10px;
+    /*poso apexoun ta mesa tou*/
+    background: #fff;
+    max-width: 10000px;
+    margin: auto;
+    display: flex;
+}
+.inner form {
+    padding-top: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+/* WTF ΡΕ ΧΑΛΑΕΙ ΤΟ RESPONSIVENESS ΟΧΙ CUSTOM ΧΑΚΙΕΣ ΠΟΥ ΝΑ ΜΗΝ ΕΙΝΑΙ ΣΥΓΚΕΚΡΙΜΕΝΕΣ*/
+
+/*
+  button {
+    margin-top: 60px; } 
+}
+*/
+
+.card-img-top {
+  width: 94%;
+  border-top-left-radius: calc(.25rem - 1px);
+  border-top-right-radius: calc(.25rem - 1px);
+  margin: 8px;
+  align-self: center;
+}
+
+.rating {
+    float: left;
+}
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+      follow these rules. Every browser that supports :checked also supports :not(), so
+      it doesn’t make the test unnecessarily selective */
+
+.rating:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+    clip: rect(0, 0, 0, 0);
+}
+.rating:not(:checked)>label {
+    float: right;
+    width: 1em;
+    /* padding:0 .1em; */
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 300%;
+    /* line-height:1.2; */
+    color: #ddd;
+}
+.rating:not(:checked)>label:before {
+    content: '★ ';
+}
+.rating>input:checked~label {
+    color: dodgerblue;
+}
+.rating:not(:checked)>label:hover, .rating:not(:checked)>label:hover~label {
+    color: dodgerblue;
+}
+.rating>input:checked+label:hover, .rating>input:checked+label:hover~label, .rating>input:checked~label:hover, .rating>input:checked~label:hover~label, .rating>label:hover~input:checked~label {
+    color: dodgerblue;
+}
+.rating>label:active {
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
+.map {
+    width: 300px;
+    height: auto;
+}
+/*# sourceMappingURL=style.css.map */

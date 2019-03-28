@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- favicon display -->
+        <link rel="shortcut icon" href="includes/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="includes/images/favicon.ico" type="image/x-icon">
+        <title>Αποτελέσματα Αναζήτησης</title>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        
+        <%- include('./includes/html/head_includes.ejs'); %>
+        
+        
+        <script src="includes/controllers/activities.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+        <script src="includes/controllers/activities.js"></script>
+        <!-- Custom styles for this template -->
+        <link href="includes/css/style.css" rel="stylesheet">
+        <link href="includes/css/autocomplete.css" rel="stylesheet">
+        
+        
+        <script type="text/javascript">
+            $(function () {
+        $("#search-query").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                        url: "https://localhost:8765/observatory/api/products/autocomplete",
+                        type: "GET",
+                        data: request,  // request is the value of search input
+                        success: function (data) {
+                            // Map response values to fiedl label and value
+                            response($.map(data, function (el) {
+                                    return {
+                                        label: el.name,
+                                        value: el.id
+                                    };
+                                    }));
+                            }
+                        });
+                },
+                
+                // The minimum number of characters a user must type before a search is performed.
+                minLength: 3,
+                
+                // set an onFocus event to show the result on input field when result is focused
+                focus: function (event, ui) {
+                        this.value = ui.item.label;
+                        // Prevent other event from not being execute
+                        event.preventDefault();
+                },
+                select: function (event, ui) {
+                        // Prevent value from being put in the input:
+                        this.value = ui.item.label;
+                        // Set the id to the next input hidden field
+                        
+                        console.log($('#search-query'))
+                        var scope = angular.element("#search-query").scope();
+                        
+                        scope.autocomplete_val = ui.item.value
+                        // Prevent other event from not being execute
+                        event.preventDefault();
+                        // optionnal: submit the form after field has been filled up
+                        //$('#quicksearch').submit();
+                }
+        });
+        });
+        </script>
+        <style type="text/css">
+            .list-group-item {
+            padding: 0.20rem 1.25rem;
+            }
+            .card-body {
+            padding: 0.5rem 1.25rem;
+            }
+            .card-title {
+            margin-bottom: 0rem;
+            }
+        </style>
+    </head>
+    <!--exo kanei copy paste to skeleto apo to homepage, opos to eixe kanei o xristos,
+        opote den ksero ama prepei kapoia pragmata prepei na allaksoun, px o activities controller klp
+    opote ELENA des ta! -->
+    <body ng-app="myApp" id="main-body" ng-controller="ActivitiesController" ng-init="init_search()" ng-cloak >
+        <header ng-cloak>
+            <%- include('./includes/html/nav_logged.ejs'); %>
+        </header>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            
+            <div class="col-6">
+                <form class="form" id="quicksearch" ng-submit="search_activity()">
+                    <input class="form-control autocomplete align-middle" type="text" id="search-query" placeholder="π.χ. Ποδόσφαιρο">
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-success mt-sm-0" type="submit">Αναζήτηση</button>
+                </div>
+            </form>
+            
+        </div>
+        <div class="container-fluid">
+            
+            <div class="row d-lg-none">
+                <nav class="navbar navbar-light bg-light" >
+                    <a class="navbar-brand" href="#">Φίλτρα</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContentsmall" aria-controls="navbarSupportedContentsmall" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContentsmall">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item mr-2 my-2 text-left">
+                                <label>Τιμή έως (ανά ημέρα - €)</label>
+                                <input type="number" class="form-control" ng-model="price_per_day">
+                                <hr class="clearfix w-100">
+                            </li>
+                            <li class="nav-item mr-2 my-2 text-left">
+                                <label>Περίοδος ισχύος τιμής</label>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <label>από</label>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input type="date" class="form-control" ng-model="fromDate">
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label>έως</label>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input type="date" class="form-control" ng-model="toDate">
+                                    </div>
+                                </div>
+                                <hr class="clearfix w-100">
+                            </li>
+                            <li class="nav-item mr-2 my-2 text-left">
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label>Διεύθυνση</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" placeholder="π.χ. Ασημακοπούλου 11, Άγιος Δημήτριος" ng-model="address">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label>Μέγιστη απόσταση από διεύθυνση (χλμ)</label>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="number" class="form-control" placeholder="π.χ. 3" ng-model="distance">
+                                    </div>
+                                </div>
+                                <hr class="clearfix w-100">
+                            </li>
+                            
+                            
+                            <!-- episis o xristos eipe oti tha mporei na epileksei mono 1 kathgoria, giauto exo valei aplo select -->
+                            <li class="nav-item mr-2 my-2 text-left">
+                                <label>Κατηγορία</label>
+                                <select class="form-control" id="exampleFormControlSelect2" ng-model="selected_category">
+                                    <option>Ομαδικά αθλήματα</option>
+                                    <option>Ατομικά αθλήματα</option>
+                                    <option>Πολεμικές τέχνες</option>
+                                    <option>Χοροί</option>
+                                    <option>Αθλήματα νερού</option>
+                                    <option>Δραστηριότητα εσωτερικού χώρου</option>
+                                    <option>Δραστηριότητα εξωτερικού χώρου</option>
+                                    <option>Χειμερινά</option>
+                                </select>
+                                <hr class="clearfix w-100">
+                            </li>
+                            <li class="nav-item mr-2 my-2 text-left">
+                                <label>Ταξινόμηση</label>
+                                <select class="form-control" id="exampleFormControlSelect1" ng-model="selected_sort">
+                                    <option>Τιμή Αύξουσα</option>
+                                    <option>Τιμή Φθίνουσα</option>
+                                    <option>Απόσταση Αύξουσα</option>
+                                    <option>Απόσταση Φθίνουσα</option>
+                                </select>
+                            </li>
+                        </ul>
+                        <button class="btn btn-outline-success" type="submit" ng-click="give_query()">Εφαρμοφή φίλτρων</button>
+                    </div>
+                    
+                </nav>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col px-1 bg-dark position-fixed d-none d-lg-block" id="sticky-sidebar">
+                    <nav class="navbar navbar-light bg-light" >
+                        <a class="navbar-brand" href="#">Φίλτρα</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item mr-2 my-2 text-left">
+                                    <label>Τιμή έως (ανά ημέρα - €)</label>
+                                    <input type="number" class="form-control" ng-model="price_per_day">
+                                    <hr class="clearfix w-100">
+                                </li>
+                                <li class="nav-item mr-2 my-2 text-left">
+                                    <label>Περίοδος ισχύος τιμής</label>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <label>από</label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="date" class="form-control" ng-model="fromDate">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>έως</label>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="date" class="form-control" ng-model="toDate">
+                                        </div>
+                                    </div>
+                                    <hr class="clearfix w-100">
+                                </li>
+                                <li class="nav-item mr-2 my-2 text-left">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label>Διεύθυνση</label>
+                                            <input type="text" class="form-control" placeholder="π.χ. Ασημακοπούλου 11, Άγιος Δημήτριος" ng-model="address">
+                                        </div>
+                                        
+                                        <div class="col-6">
+                                            <label>Μέγιστη απόσταση από διεύθυνση (χλμ)</label>
+                                            <input type="number" class="form-control" placeholder="π.χ. 3" ng-model="distance">
+                                        </div>
+                                    </div>
+                                    <hr class="clearfix w-100">
+                                </li>
+                                
+                                
+                                <!-- episis o xristos eipe oti tha mporei na epileksei mono 1 kathgoria, giauto exo valei aplo select -->
+                                <li class="nav-item mr-2 my-2 text-left">
+                                    <label>Κατηγορία</label>
+                                    <select class="form-control" id="exampleFormControlSelect2" ng-model="selected_category">
+                                        <option>Ομαδικά αθλήματα</option>
+                                        <option>Ατομικά αθλήματα</option>
+                                        <option>Πολεμικές τέχνες</option>
+                                        <option>Χοροί</option>
+                                        <option>Αθλήματα νερού</option>
+                                        <option>Δραστηριότητα εσωτερικού χώρου</option>
+                                        <option>Δραστηριότητα εξωτερικού χώρου</option>
+                                        <option>Χειμερινά</option>
+                                    </select>
+                                    <hr class="clearfix w-100">
+                                </li>
+                                <li class="nav-item mr-2 my-2 text-left">
+                                    <label>Ταξινόμηση</label>
+                                    <select class="form-control" id="exampleFormControlSelect1" ng-model="selected_sort">
+                                        <option>Τιμή Αύξουσα</option>
+                                        <option>Τιμή Φθίνουσα</option>
+                                        <option>Απόσταση Αύξουσα</option>
+                                        <option>Απόσταση Φθίνουσα</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <button class="btn btn-outline-success" type="submit" ng-click="give_query()">Εφαρμοφή φίλτρων</button>
+                        </div>
+                        
+                    </nav>
+                </div>
+                <div class="col-md-9 col offset-md-3" id="main">
+                    
+                    <div class="list-group" style="overflow-y:hidden">
+                        <a in-view="loadMore($last, $inview)" ng-repeat="activities in results | limitTo: limit" href="/viewprice?search_prod={{activities.productId}}&search_shop={{activities.shopId}}&sel_price={{activities.price}}" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{activities.shopName}}</h5>
+                                <small>{{activities.dateFrom |  conv_day}} έως {{activities.dateTo | conv_day}}</small>
+                            </div>
+                            <h3><span class="badge badge-primary mr-2 float-right">Τιμή: {{activities.price}} €</span></h3>
+                            <small>από το χρήστη {{activities.user}}</small>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    
+</body>
+</html>

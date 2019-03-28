@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html >
+
+	<head>
+		<meta charset="utf-8">
+		<title>Είσοδος στο Activ Radar</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="includes/css/style.css">
+
+		<!-- CDNs -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="includes/js/angular.min.js"></script>
+		<script type="text/javascript" src="includes/js/angular-route.min.js"></script>
+		
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.min.js"></script>
+		<script src="includes/controllers/users.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+	</head>
+
+	<body>
+		<div ng-app="myApp" ng-controller="UsersController" class="wrapper" style="background-image: url('includes/images/athletes.jpg');">
+			<div class="inner">
+				<div class="image-holder">
+					<img src="includes/images/activradar.png" alt="">
+				</div>
+				<form ng-submit="logoutUser()"> 
+					<h4>Είσοδος στο Activ Radar</h4>
+					<div class="container">
+						<div class="row d-flex justify-content-center">
+	    					<button type="submit" class="btn btn-primary">wanna logout <i class="zmdi zmdi-arrow-right"></i></button>
+	    				</div>
+	    			</div> 
+				</form>
+			</div>
+		</div> 
+		
+	</body>
+</html>

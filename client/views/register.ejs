@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html >
+
+	<head>
+		<meta charset="utf-8">
+		<title>Εγγραφείτε στο Activ Radar</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="includes/css/style.css">
+		<%- include('./includes/html/head_includes.ejs'); %>	
+
+		<!-- Angular controllers -->
+		<script src="includes/controllers/users.js"></script>
+		
+	</head>
+
+	<body ng-app="myApp" ng-controller="UsersController" style="background-image: url('includes/images/athletes.jpg'); background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;">	
+		{{check_if_logged()}}
+		<br>
+		<br>
+		
+		<header>
+		<%- include('./includes/html/nav_logged.ejs'); %>
+		</header>
+		<div class="wrapper">
+			
+			<div class="inner">
+				<div class="image-holder">
+					<img src="includes/images/activradar.png" alt="">
+				</div>
+				<form ng-submit="addUser()"> 
+					<h4>Εγγραφείτε στο Activ Radar</h4>
+					<div class="container">
+						<div class="row">
+							<input type="string" placeholder="Όνομα" class="form-control" ng-model="User.first_name" id="first_name_in">
+							<div class="invalid-feedback">
+          						Εισάγετε όνομα
+        					</div>
+						</div>
+						<div class="row">
+							<input type="string" placeholder="Επώνυμο" class="form-control" ng-model="User.surname" id="surname_in">
+							<div class="invalid-feedback">
+          						Εισάγετε επίθετο
+        					</div>
+						</div>
+						<div class="row">
+							<input type="string" placeholder="Όνομα χρήστη" class="form-control" ng-model="User.username" id="username_in">
+							<div class="invalid-feedback">
+          						Εισάγετε username π.χ. (bestuser)
+        					</div>
+						</div>
+						<div class="row">
+							<input type="email" placeholder="Διεύθυνση e-mail" class="form-control" ng-model="User.email" id="email_in">
+							<div class="invalid-feedback">
+          						Εισάγετε το email σας π.χ. (bestuser@gmail.com)
+        					</div>
+						</div>
+						<div class="row">
+							<label for="start">Ημερομηνία γέννησης:</label>
+						</div>
+						<div class="row">
+							<input type="text" class="form-control" id="birthDatepicker" width="276" >
+							<script>
+        						$('#birthDatepicker').datepicker({
+            						uiLibrary: 'bootstrap4',
+            						format: 'yyyy-mm-dd',
+            						startDate: new Date(),
+            						 defaultDate: new Date() 
+        						});
+    						</script>
+							
+						</div>
+						<div class="row">
+							<input type="password" placeholder="Κωδικός πρόσβασης" class="form-control" ng-model="User.password" id="password_in">
+							<div class="invalid-feedback">
+          						Εισάγετε password (μήκος 8 έως 20 χαρακτήρες)
+        					</div>
+						</div>
+						<div class="row">
+							<div class="form-check-inline">
+							  <input class="form-check-input" type="checkbox" value="" id="agree_in">
+							  <label class="form-check-label" for="agreewithterms">
+							    Δηλώνω πως έχω διαβάσει και συμφωνώ με τους Όρους και Προϋποθέσεις Χρήσης του Activ Radar.
+							  </label>
+							</div>
+							<div class="invalid-feedback">
+          						Η αποδοχή των όρων είναι απαραίτητη
+        					</div>
+						</div>
+						<div class="row d-flex justify-content-center">
+	    					<button type="submit" class="btn btn-primary">Εγγραφή <i class="zmdi zmdi-arrow-right"></i></button>
+	    				</div>
+	    			</div> 
+				</form>
+			</div>
+		</div> 
+		<%- include('./includes/html/footer.ejs'); %>
+	</body>
+</html>

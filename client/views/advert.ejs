@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html >
+
+	<head>
+		<meta charset="utf-8">
+		<title>Διαφημιστείτε στο Activ Radar</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="includes/css/style.css">
+
+		<!-- CDNs -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <%- include('./includes/html/head_includes.ejs'); %>
+        
+		<script src="includes/controllers/activities.js"></script>
+        <script src="includes/controllers/users.js"></script>
+		
+	</head>
+
+	<body ng-app="myApp" ng-controller="UsersController" style="background-image: url('includes/images/athletes.jpg'); background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;">
+        <header ng-cloak>
+        <%- include('./includes/html/nav_logged.ejs'); %>
+        </header>
+        <br>
+        <br>
+        <br>
+        <br>
+		<div class="wrapper" >
+			<div class="inner">
+				<div class="image-holder">
+					<img src="includes/images/activradar.png" alt="">
+				</div>
+				<form ng-submit="addUser()"> 
+		            <h4>Διαφημιστείτε στο Activ Radar</h4>
+		            <h5>Συμπλήρωσε τη φόρμα για να μας στείλεις e-mail</h5>
+		            <div class="row">
+		                <input type="string" placeholder="Όνομα" class="form-control" ng-model="User.first_name">
+		            </div>
+		            <div class="row">
+		              <input type="string" placeholder="Επώνυμο" class="form-control" ng-model="User.surname">
+		            </div>
+		            <div class="row">
+		              <input type="email" placeholder="Διεύθυνση e-mail" class="form-control" ng-model="User.email">
+		            </div>
+		            <div class="row">
+		              <input type="string" placeholder="Θέμα" class="form-control" ng-model="User.subject">
+		            </div>
+		            <div class="row">
+		              <textarea class="form-control rounded-0" id="description" placeholder="Περιγραφή - Γιατί θέλεις να διαφημίσεις την επιχείρησή σου στο Activ Radar; Τι ακριβώς ζητάς;"></textarea>
+		            </div>
+		            <div class="row d-flex justify-content-center">
+		                <button type="submit" class="btn btn-primary">Αποστολή <i class="zmdi zmdi-arrow-right"></i></button>
+		            </div>
+          		</form>
+			</div>
+		</div>
+		<%- include('./includes/html/footer.ejs'); %> 
+	</body>
+</html>

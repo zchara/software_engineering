@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Activ Radar - Μάθετε περισσότερα</title>
+        <%- include('./includes/html/head_includes.ejs'); %>
+        <link rel="stylesheet" href="includes/css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.min.js"></script>
+        <link rel="stylesheet" href="includes/css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-inview/3.0.0/angular-inview.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+        <script src="includes/controllers/activities.js"></script>
+        
+    </head>
+    <body ng-app="myApp" ng-controller="ActivitiesController">
+        <header ng-cloak>
+            <%- include('./includes/html/nav_logged.ejs'); %>
+        </header>
+        <br>
+        <div class="container">
+            <hr class="clearfix w-100">
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="/faqs"><button class="btn btn-default">Συχνές Ερωτήσεις</button></a></li>
+                <li class="list-inline-item"><a href="/tutorials"><button class="btn btn-primary">Tutorials</button></a></li>
+                <li class="list-inline-item"><a href="/terms"><button class="btn btn-default">Όροι και Προϋποθέσεις</button></a></li>
+                <li class="list-inline-item"><a href="/contact"><button class="btn btn-default">Επικοινωνία & Διαφήμιση</button></a></li>
+            </ul>
+            <hr class="clearfix w-100">
+        </div>
+        <!--TUTORIALS-->
+        <br><br>
+        <div class="container" id="accordion1">
+            <div class="row">
+                <h2 class="text-left">Τutorials</h2>
+                <hr class="clearfix w-100">
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h1 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Χρειάζεται να εγγραφώ για να χρησιμοποιήσω το Activ Radar;
+                    </button>
+                    </h1>
+                </div>
+                <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordion1">
+                    <div class="card-body">
+                        Αν δεν εγγραφείς, το μόνο που μπορείς να κάνεις είναι να αναζητήσεις δραστηριότητες. Αν εγγραφείς, μπορείς επίσης να προσθέσεις δραστηριότητες, αθλητικά κέντρα και τιμές δραστηριοτήτων. Συνεισφέροντας στη βάση δραστηριοτήτων του Activ Radar κερδίζεις εμβλήματα και ανεβαίνεις επίπεδο ως χρήστης στην πλατφόρμα, ανάλογα με τα οποία απολαμβάνεις εκπτώσεις στο δίκτυο συνεργατών μας.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading2">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς να αναζητήσω μια δραστηριότητα;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordion1">
+                    <div class="card-body">
+                        Στην <a href="/" target="_blank">αρχική σελίδα</a> πληκτρολογείς τη δραστηριότητα που σε ενδιαφέρει (π.χ. ποδόσφαιρο) και πατάς "Αναζήτηση". Αυτόματα θα μεταφερθείς στη σελίδα αποτελεσμάτων. Εκεί μπορείς να περιορίσεις κι άλλο την αναζήτησή σου χρησιμοπιώντας φίλτρα σχετικά με την την τιμή, την περίοδο ισχύος της τιμής, την τοποθεσία της δραστηριότητας, το αθλητικό κέντρο στο οποίο πραγματοποιείται, την κατηγορία της, ενώ μπορείς να ταξινομήσεις τα αποτελέσματα της αναζήτησής σου ανάλογα με την τιμή και την απόσταση από την τοποθεσία.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading3">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς κάνω εγγραφή;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion1">
+                    <div class="card-body">
+                        Μπαίνεις <a href="/register" target="_blank">εδώ</a> και συμπληρώνεις τα απαραίτητα πεδία με τα στοιχεία σου. Στη συνέχεια, αποδέχεσαι τους όρους και πατάς "Εγγραφή".
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading4">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς κάνω σύνδεση;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion1">
+                    <div class="card-body">
+                        Για να συνδεθείς στο Activ Radar, πάτα <a href="/login" target="_blank">εδώ</a> και συμπλήρωσε τη διεύθυνση e-mail που δήλωσες κατά την εγγραφή σου, καθώς και τον κωδικό πρόσβασής σου. Στη συνέχεια, πατάς "Σύνδεση", και, αν τα στοιχεία που εισήγαγες ήταν σωστά, αμέσως θα βρεθείς στην αρχική σελίδα του Activ Radar με το λογαριασμό σου.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading5">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς αναρτώ μια νέα δραστηριότητα;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion1">
+                    <div class="card-body">
+                        Αν κάποια δραστηριότητα (π.χ. ράγκμπι) δεν υπάρχει στην πλατφόρμα μας, μπορείς να την προσθέσεις μέσω της Φόρμας Προσθήκης Δραστηριότητας. Για να το κάνεις αυτό, απαιτείται να έχεις εγγραφεί στο Activ Radar και να έχεις συνδεθεί στο λογαριασμό σου.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading6">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς αναρτώ μια νέα τιμή δραστηριότητας;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordion1">
+                    <div class="card-body">
+                        Αν γνωρίζεις σε ποιο αθλητικό κέντρο πραγματοποιείται κάποια δραστηριότητα και πόσο κοστίζει ημερησίως, μπορείς να την προσθέσεις μέσω της Φόρμας Προσθήκης Τιμής Δραστηριότητας. Για να το κάνεις αυτό, απαιτείται να έχεις εγγραφεί στο Activ Radar και να έχεις συνδεθεί στο λογαριασμό σου.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading7">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς αναρτώ ένα νέο αθλητικό κέντρο;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordion1">
+                    <div class="card-body">
+                        Αν κάποιο αθλητικό κέντρο δεν υπάρχει στην πλατφόρμα μας, μπορείς να το προσθέσεις μέσω της Φόρμας Προσθήκης Αθλητικού Κέντρου. Για να το κάνεις αυτό, απαιτείται να έχεις εγγραφεί στο Activ Radar και να έχεις συνδεθεί στο λογαριασμό σου.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading8">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse8" aria-expanded="false" aria-controls="collapse8" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Αν γνωρίζω ότι οι πληροφορίες μιας δραστηριότητας είναι ανακριβείς ή μπορώ να προσθέσω περισσότερες πληροφορίες σε αυτή, τι μπορώ να κάνω;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse8" class="collapse" aria-labelledby="heading8" data-parent="#accordion1">
+                    <div class="card-body">
+                        Ακολούθησε τις οδηγίες για την ερώτηση "Πώς αναρτώ μια νεά τιμή δραστηριότητας;".
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading9">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse9" aria-expanded="false" aria-controls="collapse9" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς μπορώ να δράσω αν κρίνω ότι μια δραστηριότητα δε θα έπρεπε να βρίσκεται στο Activ Radar;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse9" class="collapse" aria-labelledby="heading9" data-parent="#accordion1">
+                    <div class="card-body">
+                        Μπορείς πάντα να επικοινωνήσεις με τους διαχειριστές της πλατφόρμας για να ερευνήσουν το αίτημά σου.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading10">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse10" aria-expanded="false" aria-controls="collapse10" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς λειτουργούν τα εμβλήματα και τα επίπεδα χρηστών;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapse10" class="collapse" aria-labelledby="heading10" data-parent="#accordion1">
+                    <div class="card-body">
+                        Τα επίπεδα χρηστών καθορίζονται με βάση τις συνεισφορές τους. Συγκεκριμένα:<br>
+                        -μέχρι 3 συνεισφορές: NOVICE<br>
+                        -από 3 έως 6 συνεισφορές: APPRENTICE<br>
+                        -από 7 έως 9 συνεισφορές: ATHLETE STAR<br>
+                        -από 10 συνεισφορές και πλεόν: AMBASSADOR<br>
+                        <br>
+                        Τα εμβλήματα - badges συλλέγονται σε συγκεκριμένες ειδικές συνεισφορές. Συγκεκριμένα:<br>
+                        -COLOMBUS:   συλλέγεται αν είστε ο πρώτος που εισάγετε μια τιμή για μια δραστηριότητα<br>
+                        -EXPLORER:   συλλέγεται αν είστε ο πρώτος που εισάγετε μια τιμή για μια δραστηριότητα σε ένα συγκεκριμένο αθλητικό κέντρο<br>
+                        -AMPHIBIOUS: συλλέγεται αν συνεισφέρετε πληροφορίες για δραστηριότητες στην κατηγορία &quot;Αθλήματα Νερού&quot;<br>
+                        -TEAMPLAYER: συλλέγεται αν συνεισφέρετε πληροφορίες για δραστηριότητες στην κατηγορία &quot;Ομαδικές Δραστηριότητες&quot;<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        
+        <%- include('./includes/html/footer.ejs'); %>
+    </body>
+</html>

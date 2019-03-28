@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Αποτέλεσμα αναζήτησης</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- STYLE CSS -->
+
+	<link rel="fonts" id="bootstrap-css">
+
+	<!-- CDNs -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<%- include('./includes/html/head_includes.ejs'); %>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.js"></script>
+	<script src="includes/controllers/activities.js"></script>
+	<link rel="stylesheet" href="includes/css/style.css"> 
+	<!-- favicon display -->
+    <link rel="shortcut icon" href="includes/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="includes/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+
+</head>
+
+<body ng-app="myApp" ng-controller="ActivitiesController" ng-init="getActivity()">
+	<header ng-cloak>
+		<%- include('./includes/html/nav_logged.ejs'); %>
+		</header>
+	<br>
+	<br>
+	<br>
+
+	
+	
+	<div class="container">
+		<div class="row d-flex justify-content-left">
+		<h3>{{activity.name}}   </h3>
+			<h5 class="my-auto">
+				<span class="badge badge-primary mr-2" ng-repeat="categories in activity.tags">{{categories}}</span>
+				<!--<span class="badge badge-primary mr-2">Κατηγορία2</span>
+				<span class="badge badge-primary mr-2">Κατηγορία3</span>
+				<span class="badge badge-primary mr-2">Κατηγορία4</span>
+				<span class="badge badge-primary mr-2">Κατηγορία5</span> -->
+			</h5>
+		</div>
+		<hr class="clearfix w-100">
+		<div class="row">
+			<div class="col-sm-8">
+					<h5 class="text-left">Δραστηριότητα:</h5>
+					<h5 class="text-left" id="activityDesc">{{activity.name}}</h5>
+					<h5 class="text-left"><label for="activityDesc">Περιγραφή:</label></h5>
+					<p class="text-left" id="activityDesc">{{activity.description}}</p>
+					<h5 class="text-left"><label for="price">Τιμή</label></h5>
+					<p class="text-left" id="price">{{selected_price}}€</p>
+					<h5 class="text-left"><label for="price">Τελευταία καταχωρημένη τιμή:</label></h5>
+					<p class="text-left" id="price">{{extra.price}}€</p>
+					<h6 class="text-left"><label for="ratingstars">Βαθμολογία:</label></h6>
+					<div class="row">
+						<div class="col-2">
+							<div class="d-flex justify-content-start">{{extra.extraData.rating}}</div>
+						</div>
+						<!--<div class="col-4">
+							<div class="d-flex justify-content-start">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star-half-alt"></i>
+					 			<i class="far fa-star"></i>
+					 		</div>
+						</div> -->
+					</div>
+			</div>
+			<div class="col-sm-4">
+				<h6 class="text-left"><label for="sportsCentre">Αθλητικό κέντρο:</label></h6>
+				<p class="text-left" id="sportsCentre">{{shop.name}}</p>
+				
+				<h6>
+				<a href="https://{{shop.extraData.webpage}}" target="_blank"  class="d-flex justify-content-left">
+				<span class="badge badge-primary mr-2 ">Ιστοσελίδα</span>
+				<p class="text-left" id="sportsCentre.dieuth">{{shop.extraData.webpage}}</p>
+				</a>
+				</h6>
+				
+				<h6>
+				<a href="#" target="_blank"  class="d-flex justify-content-left">
+				<span class="badge badge-primary mr-2 ">Διεύθυνση</span>
+				<p class="text-left" id="sportsCentre.dieuth">{{shop.address}}</p>
+				</a>
+				</h6>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<h6 class="text-left"><label for="schedule">Εβδομαδιαίο πρόγραμμα:</label></h6>
+			<div class="table-responsive">
+				<table class="table">
+					<thead class="thead-dark">
+					    <tr>
+					      <th scope="col">Ημέρα</th>
+					      <th scope="col">Διαθέσιμες ώρες</th>
+					    </tr>
+					  </thead>
+					<tbody>
+						<tr>
+							<td scope="row" >Δευτέρα</th>
+							<td ng-repeat="date in extra.extraData.schedule.mon">{{date[0] | conv_date}}-{{date[1] | conv_date}}</td>
+							
+						</tr>
+						<tr>
+							<td scope="row" >Τρίτη</th>
+							<td ng-repeat="date in extra.extraData.schedule.tus">{{date[0] | conv_date}}-{{date[1] | conv_date}}</td>
+						</tr>
+						<tr>
+							<td scope="row" >Τετάρτη</th>
+							<td ng-repeat="date in extra.extraData.schedule.wed">{{date[0] | conv_date}}-{{date[1] | conv_date}}</td>
+						</tr>
+						<tr>
+							<td scope="row">Πέμπτη</th>
+							<td ng-repeat="date in extra.extraData.schedule.thu">{{date[0] | conv_date}}-{{date[1] | conv_date}}</td>
+						</tr>
+						<tr>
+							<td scope="row">Παρασκευή</th>
+							<td ng-repeat="date in extra.extraData.schedule.fri">{{date[0] | conv_date}}-{{date[1] | conv_date}}</td>
+						</tr>
+						<tr>
+							<td scope="row">Σάββατο</th>
+							<td ng-repeat="date in extra.extraData.schedule.sat">{{date[0] | conv_date}}-{{date[1] | conv_date}}</td>
+						</tr>
+						<tr>
+							<td scope="row" >Κυριακή</th>
+							<td ng-repeat="date in extra.extraData.schedule.sun">{{date[0] | conv_date}}-{{date[1] | conv_date}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-6">
+			<h6 class="text-left"><label for="schedule">Τοποθεσία:</label></h6>
+			 <div style="" id="map"></div>
+		</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<%- include('./includes/html/footer.ejs'); %>
+	</body>
+</html>

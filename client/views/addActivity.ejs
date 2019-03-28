@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<title>Activ Radar - Εισαγωγή Νέας Δραστηριότητας</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="includes/css/style.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+		<%- include('./includes/html/head_includes.ejs'); %>
+		<!-- Angular controllers -->
+		<script src="includes/controllers/activities.js"></script>
+		<!-- Bootstrap_select
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+		<script>
+			$.fn.selectpicker.Constructor.BootstrapVersion = '4.0.0';
+		</script>
+		-->
+		<!-- Include the plugin's CSS and JS: -->
+		<script type="text/javascript" src="includes/js/bootstrap-multiselect.js"></script>
+		<link rel="stylesheet" href="includes/css/bootstrap-multiselect.css" type="text/css"/>
+	</head>
+	<body ng-app="myApp" ng-controller="ActivitiesController" style="background-image: url('includes/images/athletes.jpg'); background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;">
+		<br>
+		<br>
+		
+		<header>
+			<%- include('./includes/html/nav_logged.ejs'); %>
+		</header>
+		<div class="wrapper">
+			<div class="inner">
+				<form class="needs-validation" novalidate  ng-init="get_activities()" ng-submit="post_activity()">
+					<h3>ΕΙΣΑΓΩΓΗ ΝΕΑΣ ΔΡΑΣΤΗΡΙΟΤΗΤΑΣ</h3>
+					<h5>Συμπλήρωσε τα πεδία για να εισάγεις νέα δραστηριότητα!</h5>
+					<div class="container">
+						<div class="row">
+							<label for="activity">Δραστηριότητα</label>
+						</div>
+						<div class="row">
+							<input type="text" placeholder="Όνομα δραστηριότητας" class="form-control" ng-model="Activity.name">
+						</div>
+						<div class="row">
+							<label for="category">Κατηγορίες δραστηριότητας</label>
+						</div>
+						<div class="row" id="category">
+							<select class="selectpicker" ng-init="activity_category"  data-live-search="true" multiple>
+								<option value="team">{{activity_category.op1}}</option>
+								<option value="solo">{{activity_category.op2}}</option>
+								<option value="fight">{{activity_category.op3}}</option>
+								<option value="dance">{{activity_category.op4}}</option>
+								<option value="water">{{activity_category.op5}}</option>
+								<option value="inside">{{activity_category.op6}}</option>
+								<option value="outside">{{activity_category.op7}}</option>
+								<option value="ice">{{activity_category.op8}}</option>
+							</select>
+							<script type="text/javascript">
+							$(document).ready(function() {
+							$('.selectpicker').multiselect({
+								buttonWidth: '300px',
+								enableFiltering: true,
+							});
+							});
+							</script>
+						</div>
+						<div class="row">
+							<textarea class="form-control rounded-0" id="description" placeholder="Περιγραφή δραστηριότητας" ng-model="Activity.description"></textarea>
+						</div>
+						<div class="row d-flex justify-content-center">
+							<button class="btn btn-primary" type="submit">Υποβολή</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<%- include('./includes/html/footer.ejs'); %>
+	</body>
+</html>

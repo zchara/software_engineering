@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Αποτέλεσμα αναζήτησης</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- STYLE CSS -->
+	<link rel="stylesheet" href="includes/css/style.css"> 
+	<link rel="fonts" id="bootstrap-css">
+
+	<!-- CDNs -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<!-- favicon display -->
+    <link rel="shortcut icon" href="includes/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="includes/images/favicon.ico" type="image/x-icon">
+    
+    <!-- map display ELENA FTIAKSE TO PATH!!!!!!!!! -->
+    <script src="map.js"></script>
+
+</head>
+
+<body>
+	<br>
+	<h3>Ονομασία δραστηριότητας</h3>
+	<div class="container">
+		<div class="row d-flex justify-content-left">
+			<h5>
+				<span class="badge badge-primary mr-2">Κατηγορία1</span>
+				<span class="badge badge-primary mr-2">Κατηγορία2</span>
+				<span class="badge badge-primary mr-2">Κατηγορία3</span>
+				<span class="badge badge-primary mr-2">Κατηγορία4</span>
+				<span class="badge badge-primary mr-2">Κατηγορία5</span>
+			</h5>
+		</div>
+		<hr class="clearfix w-100">
+		<div class="row">
+			<div class="col-sm-8">
+					<h6 class="text-left"><label for="activityName">Δραστηριότητα:</label></h6>
+					<h5 class="text-left" id="activityDesc">Όνομα Δραστηριότητας</h5>
+					<h6 class="text-left"><label for="activityDesc">Περιγραφή:</label></h6>
+					<p class="text-left" id="activityDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					<h6 class="text-left"><label for="price">Τιμή:</label></h6>
+					<p class="text-left" id="price">$1.000.000</p>
+					<h6 class="text-left"><label for="ratingstars">Βαθμολογία:</label></h6>
+					<div class="row">
+						<div class="col-2">
+							<div class="d-flex justify-content-start">3.7</div>
+						</div>
+						<div class="col-4">
+							<div class="d-flex justify-content-start">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star-half-alt"></i>
+					 			<i class="far fa-star"></i>
+					 		</div>
+						</div>
+					</div>
+			</div>
+			<div class="col-sm-4">
+				<h6 class="text-left"><label for="sportsCentre">Αθλητικό κέντρο:</label></h6>
+				<p class="text-left" id="sportsCentre">Όνομα αθλητικού κέντρου</p>
+				<a href="#" class="d-flex justify-content-left"><h6>
+				<span class="badge badge-primary mr-2">Ιστοσελίδα</span></h6></a>
+				<h6>
+				<a href="#" class="d-flex justify-content-left">
+				<span class="badge badge-primary mr-2 ">Διεύθυνση</span></h6></a>
+				<div id="map" class="map"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col"><h6 class="text-left"><label for="schedule">Εβδομαδιαίο πρόγραμμα:</label></h6></div>
+			
+		</div>
+		<div class="row">
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<th scope="row" class="bg-primary">Δευτέρα</th>
+							<td>23:00-00:00</td>
+							<td>00:00-01:00</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th scope="row" class="bg-primary">Τρίτη</th>
+							<td>23:00-00:00</td>
+							<td>00:00-01:00</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th scope="row" class="bg-primary">Τετάρτη</th>
+							<td>23:00-00:00</td>
+							<td>00:00-01:00</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th scope="row" class="bg-primary">Πέμπτη</th>
+							<td>23:00-00:00</td>
+							<td>00:00-01:00</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th scope="row" class="bg-primary">Παρασκευή</th>
+							<td>23:00-00:00</td>
+							<td>00:00-01:00</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th scope="row" class="bg-primary">Σάββατο</th>
+							<td>23:00-00:00</td>
+							<td>00:00-01:00</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th scope="row" class="bg-primary">Κυριακή</th>
+							<td>23:00-00:00</td>
+							<td>00:00-01:00</td>
+							<td>-</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	</body>
+</html>

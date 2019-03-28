@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<title>Προσθήκη τιμής</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="includes/css/style.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+		<!-- CDNs -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript" src="includes/js/angular.min.js"></script>
+		<script type="text/javascript" src="includes/js/angular-route.min.js"></script>
+		<script src="includes/controllers/activities.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-inview/3.0.0/angular-inview.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+		<script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+		<link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+		<!-- favicon display -->
+		<link rel="shortcut icon" href="includes/images/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="includes/images/favicon.ico" type="image/x-icon">
+	</head>
+	<body ng-app="myApp" ng-controller="ActivitiesController" >
+		<br>
+		<br>
+		
+		<header>
+			<%- include('./includes/html/nav_logged.ejs'); %>
+		</header>
+		<div class="wrapper" style="background-image: url('includes/images/athletes.jpg');">
+			<div class="inner">
+				<form class="needs-validation" novalidate  ng-init="checked=false; checked2=false; get_activities();  get_sportcenters()" ng-submit="put_activities()">
+					<h3>Προσθήκη νέας τιμής</h3>
+					<h5>Συμπλήρωσε τα πεδία για να πληροφορήσεις κι άλλους!</h5>
+					<div class="container">
+						<div class="row">
+							<label for="activity">Δραστηριότητα</label>
+						</div>
+						<div class="row" id="activity"> <!--ng-init="checked=false"-->
+						<select class="form-control" ng-model="selectedActivity" ng-repeat="activity_names in activities" id="activity_select" >
+							<option ng-click="$parent.$parent.checked=false; $parent.$parent.selectedActivity=activity" ng-repeat="activity in activity_names" >
+								<p "male" >{{activity.name}}</p>
+							</option>
+							<option values="other" ng-click="$parent.checked=true">Άλλη</option>
+						</select>
+						<div class="invalid-feedback">
+							Επιλέξτε δραστηριότητα
+						</div>
+					</div>
+					<div class="row" ng-show="checked">
+						<input type="text" placeholder="Όνομα δραστηριότητας" class="form-control" ng-model="Activity.name" id="activity_name_in">
+					</div>
+					<div class="row" ng-show="checked">
+						<label for="category">Κατηγορία δραστηριότητας</label>
+					</div>
+					<div class="row" id="category_act" ng-show="checked" >
+						<select class="selectpicker" multiple class="form-control" ng-init="activity_category">
+							<option value="team">{{activity_category.op1}}</option>
+							<option value="solo">{{activity_category.op2}}</option>
+							<option value="fight">{{activity_category.op3}}</option>
+							<option value="dance">{{activity_category.op4}}</option>
+							<option value="water">{{activity_category.op5}}</option>
+							<option value="inside">{{activity_category.op6}}</option>
+							<option value="outside">{{activity_category.op7}}</option>
+							<option value="ice">{{activity_category.op8}}</option>
+						</select>
+					</div>
+					<div class="row" ng-show="checked">
+						<textarea class="form-control rounded-0" id="description" placeholder="Περιγραφή δραστηριότητας" ng-model="Activity.description"></textarea>
+					</div>
+					<div class="row">
+						<label for="sportsCenter">Αθλητικό κέντρο</label>
+					</div>
+					<div class="row" id="sportsCenter"   > <!--ng-init="checked2=false"-->
+					<select name="" class="form-control" ng-repeat="sportcenter_names in sportscenters" ng-model="selectedCenter" id="sportscenter_select">
+						<option ng-click="$parent.$parent.checked2=false; $parent.$parent.selectedCenter=center" ng-repeat="center in sportcenter_names" >
+							<p value="male"> {{center.name}}, {{center.address}} </p>
+						</option>
+						<option values="other" ng-click="$parent.checked2=true">Άλλο</option>
+					</select>
+					<div class="invalid-feedback">
+						Επιλέξτε αθλητικό κέντρο
+					</div>
+				</div>
+				<!-- addSportsCenter -->
+				<div class="row">
+					<input type="text" placeholder="Όνομα αθλητικού κέντρου" class="form-control" ng-show="checked2" ng-model="Sportscenter.name" id="sportscenter_name_in">
+				</div>
+				<div class="row">
+					<input type="text" placeholder="Διεύθυνση" class="form-control" ng-show="checked2" ng-model="Sportscenter.address" id="sportscenter_address_in">
+				</div>
+				<div class="row">
+					<input type="text" placeholder="Ιστοσελίδα" class="form-control" ng-show="checked2" ng-model="Sportscenter.webpage" id="sportscenter_webpage_in">
+				</div>
+				<div class="row" id="category_spor" ng-show="checked2" >
+					<label for="spor_category">Tags: </label>
+					<select id="spor_category" class="selectpicker" multiple class="form-control" ng-init="activity_category">
+						<option value="team">{{activity_category.op1}}</option>
+						<option value="solo">{{activity_category.op2}}</option>
+						<option value="fight">{{activity_category.op3}}</option>
+						<option value="dance">{{activity_category.op4}}</option>
+						<option value="water">{{activity_category.op5}}</option>
+						<option value="inside">{{activity_category.op6}}</option>
+						<option value="outside">{{activity_category.op7}}</option>
+						<option value="ice">{{activity_category.op8}}</option>
+					</select>
+				</div>
+				<!-- End of addSportsCenter -->
+				<div class="row">
+					<input type="text" placeholder="Τιμή" class="form-control" ng-model="input.price" id="input_price">
+					<div class="invalid-feedback">
+						Εισάγετε τιμή
+					</div>
+				</div>
+				<div class="row">
+					<label for="ratingstars">Βαθμολογία</label>
+				</div>
+				<div class="row">
+					<div class="rating" id="ratingstars">
+						<input type="radio" id="star5" name="rating" value="5" ng-model="input.rating" /><label for="star5" title="freakinAwesome">5 stars</label>
+						<input type="radio" id="star4" name="rating" value="4" ng-model="input.rating"/><label for="star4" title="quiteGood">4 stars</label>
+						<input type="radio" id="star3" name="rating" value="3" ng-model="input.rating"/><label for="star3" title="meh">3 stars</label>
+						<input type="radio" id="star2" name="rating" value="2" ng-model="input.rating"/><label for="star2" title="kindaBad">2 stars</label>
+						<input type="radio" id="star1" name="rating" value="1" ng-model="input.rating"/><label for="star1" title="dontGoThere">1 star</label>
+					</div>
+				</div>
+				<div class="row">
+					<label for="dateFrompicker">Από:</label>
+					<input type="text" class="form-control" id="dateFrompicker" width="276" />
+				</div>
+				<div class="row">
+					<label for="dateTopicker">Μέχρι:</label>
+					<input type="text" class="form-control" id="dateTopicker" width="276" />
+				</div>
+				<script>
+				$('#dateFrompicker').datepicker({
+				uiLibrary: 'bootstrap4',
+				format: 'yyyy-mm-dd',
+				startDate: new Date(),
+				defaultDate: new Date()
+				});
+				$('#dateTopicker').datepicker({
+				uiLibrary: 'bootstrap4',
+				format: 'yyyy-mm-dd',
+				startDate: new Date(),
+				currentText: "Now"
+				});
+				</script>
+				<div class="row">
+					<label id="program" for="program_fields" >Πρόγραμμα Δραστηριότητας </label>
+					<div class="invalid-feedback">
+						Ελέγξτε τις ώρες προγράμματος!
+					</div>
+				</div>
+				<div id="Day1" ng-init="counterMon=0; showmon1=false; showmon2=false; showmon3=false">
+					<div class="row">
+						<label for="monday">Δευτέρα</label>
+					</div>
+					<div id="monday"></div>
+					<!-- Always here -->
+					<div class="row" >
+						<div class="col-sm-1">
+							<label for="mondayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="mondayTimeStart" ng-model="input.monday[0]" name="mondayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="mondayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="mondayTimeEnd" ng-model="input.monday[1]" name="mondayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="plushtmlmonday()">+</button>
+						</div>
+					</div>
+					<!-- first -->
+					<div class="row" ng-show="showmon1" >
+						<div class="col-sm-1">
+							<label for="mondayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="mondayTimeStart1" ng-model="monday1_start" name="mondayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="mondayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="mondayTimeEnd1" ng-model="monday1_end" name="mondayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_first_htmlmonday()">-</button>
+						</div>
+					</div>
+					<!-- Second -->
+					<div class="row" ng-show="showmon2">
+						<div class="col-sm-1">
+							<label for="mondayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="mondayTimeStart2" ng-model="monday2_start" name="mondayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="mondayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="mondayTimeEnd2" ng-model="monday2_end" name="mondayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_second_htmlmonday()">-</button>
+						</div>
+					</div>
+					<!-- Third -->
+					<div class="row" ng-show="showmon3">
+						<div class="col-sm-1">
+							<label for="mondayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="mondayTimeStart3" ng-model="monday3_start" name="mondayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="mondayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="mondayTimeEnd3" ng-model="monday3_end" name="mondayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_third_htmlmonday()">-</button>
+						</div>
+					</div>
+				</div>
+				<div id="Day2" ng-init="counterTus=0; showtus1=false; showtus2=false; showtus3=false">
+					<div class="row">
+						<label for="tuesday">Τρίτη</label>
+					</div>
+					<div id="tuesday"></div>
+					<!-- Always here -->
+					<div class="row" >
+						<div class="col-sm-1">
+							<label for="tuesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tuesdayTimeStart" ng-model="input.tuesday[0]" name="tuesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="tuesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="tuesdayTimeEnd" ng-model="input.tuesday[1]" name="tuesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="plushtmltuesday()">+</button>
+						</div>
+					</div>
+					<!-- first -->
+					<div class="row" ng-show="showtus1" >
+						<div class="col-sm-1">
+							<label for="tuesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tuesdayTimeStart1" ng-model="tuesday1_start" name="tuesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="tuesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="tuesdayTimeEnd1" ng-model="tuesday1_end" name="tuesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_first_htmltuesday()">-</button>
+						</div>
+					</div>
+					<!-- Second -->
+					<div class="row" ng-show="showtus2">
+						<div class="col-sm-1">
+							<label for="tuesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tuesdayTimeStart2" ng-model="tuesday2_start" name="tuesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="tuesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="tuesdayTimeEnd2" ng-model="tuesday2_end" name="tuesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_second_htmltuesday()">-</button>
+						</div>
+					</div>
+					<!-- Third -->
+					<div class="row" ng-show="showtus3">
+						<div class="col-sm-1">
+							<label for="tuesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="tuesdayTimeStart3" ng-model="tuesday3_start" name="tuesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="tuesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="tuesdayTimeEnd3" ng-model="tuesday3_end" name="tuesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_third_htmltuesday()">-</button>
+						</div>
+					</div>
+				</div>
+				<div id="Day3" ng-init="counterWed=0; showwed1=false; showwed2=false; showwed3=false">
+					<div class="row">
+						<label for="wednesday">Τετάρτη</label>
+					</div>
+					<div id="wednesday"></div>
+					<!-- Always here -->
+					<div class="row" >
+						<div class="col-sm-1">
+							<label for="wednesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="wednesdayTimeStart" ng-model="input.wednesday[0]" name="wednesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="wednesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="wednesdayTimeEnd" ng-model="input.wednesday[1]" name="wednesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="plushtmlwednesday()">+</button>
+						</div>
+					</div>
+					<!-- first -->
+					<div class="row" ng-show="showwed1" >
+						<div class="col-sm-1">
+							<label for="wednesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="wednesdayTimeStart1" ng-model="wednesday1_start" name="wednesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="wednesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="wednesdayTimeEnd1" ng-model="wednesday1_end" name="wednesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_first_htmlwednesday()">-</button>
+						</div>
+					</div>
+					<!-- Second -->
+					<div class="row" ng-show="showwed2">
+						<div class="col-sm-1">
+							<label for="wednesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="wednesdayTimeStart2" ng-model="wednesday2_start" name="wednesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="wednesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="wednesdayTimeEnd2" ng-model="wednesday2_end" name="wednesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_second_htmlwednesday()">-</button>
+						</div>
+					</div>
+					<!-- Third -->
+					<div class="row" ng-show="showwed3">
+						<div class="col-sm-1">
+							<label for="wednesdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="wednesdayTimeStart3" ng-model="wednesday3_start" name="wednesdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="wednesdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="wednesdayTimeEnd3" ng-model="wednesday3_end" name="wednesdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_third_htmlwednesday()">-</button>
+						</div>
+					</div>
+				</div>
+				<div id="Day4" ng-init="counterThu=0; showthu1=false; showthu2=false; showthu3=false">
+					<div class="row">
+						<label for="thursday">Πέμπτη</label>
+					</div>
+					<div id="thursday"></div>
+					<!-- Always here -->
+					<div class="row" >
+						<div class="col-sm-1">
+							<label for="thursdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="thursdayTimeStart" ng-model="input.thursday[0]" name="thursdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="thursdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="thursdayTimeEnd" ng-model="input.thursday[1]" name="thursdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="plushtmlthursday()">+</button>
+						</div>
+					</div>
+					<!-- first -->
+					<div class="row" ng-show="showthu1" >
+						<div class="col-sm-1">
+							<label for="thursdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="thursdayTimeStart1" ng-model="thursday1_start" name="thursdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="thursdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="thursdayTimeEnd1" ng-model="thursday1_end" name="thursdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_first_htmlthursday()">-</button>
+						</div>
+					</div>
+					<!-- Second -->
+					<div class="row" ng-show="showthu2">
+						<div class="col-sm-1">
+							<label for="thursdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="thursdayTimeStart2" ng-model="thursday2_start" name="thursdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="thursdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="thursdayTimeEnd2" ng-model="thursday2_end" name="thursdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_second_htmlthursday()">-</button>
+						</div>
+					</div>
+					<!-- Third -->
+					<div class="row" ng-show="showthu3">
+						<div class="col-sm-1">
+							<label for="thursdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="thursdayTimeStart3" ng-model="thursday3_start" name="thursdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="thursdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="thursdayTimeEnd3" ng-model="thursday3_end" name="thursdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_third_htmlthursday()">-</button>
+						</div>
+					</div>
+				</div>
+				<div id="Day5" ng-init="counterFri=0; showfri1=false; showfri2=false; showfri3=false">
+					<div class="row">
+						<label for="friday">Παρασκευή</label>
+					</div>
+					<div id="friday"></div>
+					<!-- Always here -->
+					<div class="row" >
+						<div class="col-sm-1">
+							<label for="fridayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="fridayTimeStart" ng-model="input.friday[0]" name="fridayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="fridayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="fridayTimeEnd" ng-model="input.friday[1]" name="fridayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="plushtmlfriday()">+</button>
+						</div>
+					</div>
+					<!-- first -->
+					<div class="row" ng-show="showfri1" >
+						<div class="col-sm-1">
+							<label for="fridayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="fridayTimeStart1" ng-model="friday1_start" name="fridayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="fridayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="fridayTimeEnd1" ng-model="friday1_end" name="fridayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_first_htmlfriday()">-</button>
+						</div>
+					</div>
+					<!-- Second -->
+					<div class="row" ng-show="showfri2">
+						<div class="col-sm-1">
+							<label for="fridayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="fridayTimeStart2" ng-model="friday2_start" name="fridayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="fridayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="fridayTimeEnd2" ng-model="friday2_end" name="fridayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_second_htmlfriday()">-</button>
+						</div>
+					</div>
+					<!-- Third -->
+					<div class="row" ng-show="showfri3">
+						<div class="col-sm-1">
+							<label for="fridayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="fridayTimeStart3" ng-model="friday3_start" name="fridayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="fridayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="fridayTimeEnd3" ng-model="friday3_end" name="fridayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_third_htmlfriday()">-</button>
+						</div>
+					</div>
+				</div>
+				<div id="Day6" ng-init="counterSat=0; showsat1=false; showsat2=false; showsat3=false">
+					<div class="row">
+						<label for="saturday">Σάββατο</label>
+					</div>
+					<div id="saturday"></div>
+					<!-- Always here -->
+					<div class="row" >
+						<div class="col-sm-1">
+							<label for="saturdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="saturdayTimeStart" ng-model="input.saturday[0]" name="saturdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="saturdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="saturdayTimeEnd" ng-model="input.saturday[1]" name="saturdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="plushtmlsaturday()">+</button>
+						</div>
+					</div>
+					<!-- first -->
+					<div class="row" ng-show="showsat1" >
+						<div class="col-sm-1">
+							<label for="saturdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="saturdayTimeStart1" ng-model="saturday1_start" name="saturdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="saturdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="saturdayTimeEnd1" ng-model="saturday1_end" name="saturdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_first_htmlsaturday()">-</button>
+						</div>
+					</div>
+					<!-- Second -->
+					<div class="row" ng-show="showsat2">
+						<div class="col-sm-1">
+							<label for="saturdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="saturdayTimeStart2" ng-model="saturday2_start" name="saturdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="saturdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="saturdayTimeEnd2" ng-model="saturday2_end" name="saturdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_second_htmlsaturday()">-</button>
+						</div>
+					</div>
+					<!-- Third -->
+					<div class="row" ng-show="showsat3">
+						<div class="col-sm-1">
+							<label for="saturdayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="saturdayTimeStart3" ng-model="saturday3_start" name="saturdayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="saturdayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="saturdayTimeEnd3" ng-model="saturday3_end" name="saturdayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_third_htmlsaturday()">-</button>
+						</div>
+					</div>
+				</div>
+				<div id="Day7" ng-init="counterSun=0; showsun1=false; showsun2=false; showsun3=false">
+					<div class="row">
+						<label for="sunday">Κυριακή</label>
+					</div>
+					<div id="sunday"></div>
+					<!-- Always here -->
+					<div class="row" >
+						<div class="col-sm-1">
+							<label for="sundayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="sundayTimeStart" ng-model="input.sunday[0]" name="sundayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="sundayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="sundayTimeEnd" ng-model="input.sunday[1]" name="sundayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="plushtmlsunday()">+</button>
+						</div>
+					</div>
+					<!-- first -->
+					<div class="row" ng-show="showsun1" >
+						<div class="col-sm-1">
+							<label for="sundayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="sundayTimeStart1" ng-model="sunday1_start" name="sundayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="sundayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="sundayTimeEnd1" ng-model="sunday1_end" name="sundayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_first_htmlsunday()">-</button>
+						</div>
+					</div>
+					<!-- Second -->
+					<div class="row" ng-show="showsun2">
+						<div class="col-sm-1">
+							<label for="sundayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="sundayTimeStart2" ng-model="sunday2_start" name="sundayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="sundayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="sundayTimeEnd2" ng-model="sunday2_end" name="sundayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_second_htmlsunday()">-</button>
+						</div>
+					</div>
+					<!-- Third -->
+					<div class="row" ng-show="showsun3">
+						<div class="col-sm-1">
+							<label for="sundayTimeStart">από</label>
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="sundayTimeStart3" ng-model="sunday3_start" name="sundayTimeStart[]" placeholder="Ώρα π.χ. 15:30">
+						</div>
+						<div class="col-sm-1">
+							<label for="sundayTimeEnd">έως</label>
+						</div>
+						<div class="col-sm-4">
+							<input type=“text” class="form-control" id="sundayTimeEnd3" ng-model="sunday3_end" name="sundayTimeEnd[]" placeholder="Ώρα π.χ. 16:30">
+						</div>
+						<div class="col-sm-2">
+							<button class="btn btn-success" type="button" ng-click="minus_third_htmlsunday()">-</button>
+						</div>
+					</div>
+				</div>
+				<div class="row d-flex justify-content-center">
+					<button class="btn btn-primary" type="submit">Υποβολή
+					<i class="zmdi zmdi-arrow-right"></i></button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

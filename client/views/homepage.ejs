@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<!-- favicon display -->
+		<link rel="shortcut icon" href="includes/images/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="includes/images/favicon.ico" type="image/x-icon">
+
+		<title>Activ Radar</title>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+		<%- include('./includes/html/head_includes.ejs'); %>
+	 
+		<script src="includes/controllers/activities.js"></script>
+
+		<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+		<!-- Custom styles for this template -->
+		<link href="includes/css/style.css" rel="stylesheet">
+		<link href="includes/css/autocomplete.css" rel="stylesheet">
+
+		<script type="text/javascript">
+			$(function () {
+
+	$("#search-query").autocomplete({
+			source: function (request, response) {
+				 $.ajax({
+						url: "https://localhost:8765/observatory/api/products/autocomplete",
+						type: "GET",
+						data: request,  // request is the value of search input
+						success: function (data) {
+							// Map response values to fiedl label and value
+							 response($.map(data, function (el) {
+									return {
+										 label: el.name,
+										 value: el.id
+									};
+									}));
+							 }
+						});
+				 },
+				 
+				 // The minimum number of characters a user must type before a search is performed.
+				 minLength: 3,
+				 
+				 // set an onFocus event to show the result on input field when result is focused
+				 focus: function (event, ui) {
+						this.value = ui.item.label;
+						// Prevent other event from not being execute
+						event.preventDefault();
+				 },
+				 select: function (event, ui) {
+						// Prevent value from being put in the input:
+						this.value = ui.item.label;
+						// Set the id to the next input hidden field
+						
+						console.log($('#search-query'))
+						var scope = angular.element("#search-query").scope();
+						
+						scope.autocomplete_val = ui.item.value
+						// Prevent other event from not being execute            
+						event.preventDefault();
+						// optionnal: submit the form after field has been filled up
+						//$('#quicksearch').submit();
+				 }
+	});
+
+});
+
+		</script>
+
+
+		<style type="text/css">
+			.list-group-item {
+			padding: 0.20rem 1.25rem;
+			}
+			.card-body {
+			padding: 0.5rem 1.25rem;
+			}
+			.card-title {
+			margin-bottom: 0rem;
+			}
+		</style>
+	</head>
+	
+	<body ng-app="myApp" id="main-body" ng-controller="ActivitiesController" ng-cloak>
+
+
+		<header ng-cloak>
+		<%- include('./includes/html/nav_logged.ejs'); %>
+		</header>
+
+		<br><br><br><br>
+		<div class="container my-20">
+			<div class="row d-flex justify-content-center">
+				<img src="includes/images/logos/logo-blacknblue.png">
+			</div>
+			<div class="row d-flex justify-content-center">
+				<h3>Αναζητήστε την επόμενη δραστηριότητά σας.</h3>
+			</div>
+				<div class="row d-flex justify-content-center">
+					<div class="col-sm-8">
+				<form class="form" id="quicksearch" ng-submit="search_activity()">
+							<input class="form-control autocomplete" type="text" id="search-query" placeholder="π.χ. Ποδόσφαιρο" >
+							
+					</div>
+					
+						<button class="btn btn-outline-success mt-sm-0" type="submit">Αναζήτηση</button>
+				</form>
+					</div>
+				</div> 
+		</div>
+		<br>
+
+		<!-- Wrap the rest of the page in another container to center all the content. -->
+
+		<div class="container marketing">
+		<!-- Categories:
+		1. Ομαδικά αθλήματα
+		2. Ατομικά αθλήματα
+		3. Πολεμικές τέχνες
+		4. Χοροί
+		5. Αθλήματα νερού
+		6. Δραστηριότητα εσωτερικού χώρου
+		7. Δραστηριότητα εξωτερικού χώρου
+		8. Χειμερινά Αθλήματα -->
+					
+
+			<!-- Load all the Activities of each Category and display in a scrollable list -->
+			<div class="row" ng-init="get_recent_acts()">
+				<div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;" >
+				<div class="card" style="width: 100%;">
+					<img style="width: 100%; height: auto" class="card-img-top img-thumbnail rounded-square" src="includes/images/home/team.jpg" alt="Ομαδική Δραστηριότητα">
+					<div class="card-body">
+						 <h5 class="card-title">Ομαδικές</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item" ng-repeat="activity in recent_acts.team">{{activity.name}}</li>  
+					</ul>
+					</div>
+				</div>
+
+			 <div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;">
+				<div class="card" style="width: 100%;" >
+					<img class="card-img-top img-thumbnail rounded-square" src="includes/images/home/solo.jpg" alt="Ατομική Δραστηριότητα">
+					<div class="card-body">
+						 <h5 class="card-title">Ατομικές</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item" ng-repeat="activity in recent_acts.solo">{{activity.name}}</li>
+						</ul>
+
+					</div>
+				</div>
+
+			<div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;">
+				<div class="card" style="width: 100%;">
+					<img class="card-img-top img-thumbnail rounded-square" src="includes/images/home/indoors.jpg" alt="Δραστηριότητα εσωτερικού χώρου">
+					<div class="card-body">
+						 <h5 class="card-title">Εσωτερικού χώρου</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item" ng-repeat="activity in recent_acts.indoors">{{activity.name}}</li>
+					</ul>
+					</div>
+				</div>
+
+			 <div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;">
+				<div class="card" style="width: 100%;">
+					<img class="card-img-top img-thumbnail rounded-square" src="includes/images/home/outdoors.jpg" alt="Δραστηριότητα εξωτερικού χώρου">
+					<div class="card-body">
+						 <h5 class="card-title">Εξωτερικού χώρου</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+						<li class="list-group-item" ng-repeat="activity in recent_acts.outdoors">{{activity.name}}</li>
+					</ul>
+					</div>
+				</div>
+
+				<div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;">
+				<div class="card" style="width: 100%;">
+					<img class="card-img-top img-thumbnail rounded-square" src="includes/images/home/ice.jpg" alt="Χειμερινά αθλήματα">
+					<div class="card-body">
+						 <h5 class="card-title">Χειμερινά αθλήματα</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+						<li class="list-group-item" ng-repeat="activity in recent_acts.ice">{{activity.name}}</li>
+					</ul>
+					</div>
+				</div>
+
+				<div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;">
+				<div class="card" style="width: 100%;">
+					<img class="card-img-top img-thumbnail rounded-square" src="includes/images/home/water.jpg" alt="Αθλήματα νερού">
+					<div class="card-body">
+						 <h5 class="card-title">Αθλήματα νερού</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item" ng-repeat="activity in recent_acts.water">{{activity.name}}</li>
+					</ul>
+
+					</div>
+				</div>
+
+
+				<div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;">
+				<div class="card" style="width: 100%;">
+					<img class="card-img-top img-thumbnail rounded-square" src="includes/images/home/fight.jpg" alt="Πολεμικές τέχνες">
+					<div class="card-body">
+						 <h5 class="card-title">Πολεμικές τέχνες</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item" ng-repeat="activity in recent_acts.fight">{{activity.name}}</li>
+						</ul>
+
+					</div>
+				</div>
+
+				<div class="col-xl-3" style="width: 100%; padding-top: 5px;padding-bottom: 5px;">
+				<div class="card" style="width: 100%;">
+					<img class="card-img-top img-thumbnail rounded-square" src="includes/images/home/dance.jpg" alt="Χοροί">
+					<div class="card-body">
+						 <h5 class="card-title">Χοροί</h5>
+					</div>
+						<ul class="list-group list-group-flush">
+						<li class="list-group-item" ng-repeat="activity in recent_acts.dance">{{activity.name}}</li>
+					</ul>
+
+					</div>
+				</div>
+			</div>
+			</div>
+		<%- include('./includes/html/footer.ejs'); %>
+		
+	</body>
+</html>

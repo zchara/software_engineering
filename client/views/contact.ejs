@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Activ Radar - Μάθετε περισσότερα</title>
+        <link rel="stylesheet" href="includes/css/style.css">
+        <%- include('./includes/html/head_includes.ejs'); %>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.min.js"></script>
+        <link rel="stylesheet" href="includes/css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-inview/3.0.0/angular-inview.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+        <script src="includes/controllers/activities.js"></script>
+        
+    </head>
+    <body ng-app="myApp" ng-controller="ActivitiesController">
+        <header ng-cloak>
+            <%- include('./includes/html/nav_logged.ejs'); %>
+        </header>
+        <br>
+        <div class="container">
+            <hr class="clearfix w-100">
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="/faqs"><button class="btn btn-default">Συχνές Ερωτήσεις</button></a></li>
+                <li class="list-inline-item"><a href="/tutorials"><button class="btn btn-default">Tutorials</button></a></li>
+                <li class="list-inline-item"><a href="/terms"><button class="btn btn-default">Όροι και Προϋποθέσεις</button></a></li>
+                <li class="list-inline-item"><a href="/contact"><button class="btn btn-primary">Επικοινωνία & Διαφήμιση</button></a></li>
+            </ul>
+            <hr class="clearfix w-100">
+        </div>
+        
+        <!--CONTACT-->
+        <br><br>
+        <div class="container">
+            <div class="row">
+                <h2 class="text-left">Επικοινωνήστε μαζί μας</h2>
+                <hr class="clearfix w-100">
+                <br><br>
+                <p>Αν δεν σας καλύψαμε, μπορείτε να επικοινωνήσετε μαζί μας μέσω email στο info@activradar.com</p>
+            </div>
+            <!--form ng-submit="addUser()">
+            <div class="row">
+                <input type="string" placeholder="Όνομα" class="form-control" ng-model="User.first_name">
+            </div>
+            <div class="row">
+                <input type="string" placeholder="Επώνυμο" class="form-control" ng-model="User.surname">
+            </div>
+            <div class="row">
+                <input type="email" placeholder="Διεύθυνση e-mail" class="form-control" ng-model="User.email">
+            </div>
+            <div class="row">
+                <input type="string" placeholder="Θέμα" class="form-control" ng-model="User.email">
+            </div>
+            <div class="row">
+                <textarea class="form-control rounded-0" id="description" placeholder="Περιγραφή"></textarea>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Αποστολή <i class="zmdi zmdi-arrow-right"></i></button>
+            </div>
+        </form-->
+        <br>
+    </div>
+</div>
+<%- include('./includes/html/footer.ejs'); %>
+</body>
+</html>

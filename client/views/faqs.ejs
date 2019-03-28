@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Activ Radar - Μάθετε περισσότερα</title>
+        <%- include('./includes/html/head_includes.ejs'); %>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.min.js"></script>
+        <link rel="stylesheet" href="includes/css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-inview/3.0.0/angular-inview.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+        <script src="includes/controllers/activities.js"></script>
+        
+    </head>
+    <body ng-app="myApp" ng-controller="ActivitiesController">
+        <header ng-cloak>
+            <%- include('./includes/html/nav_logged.ejs'); %>
+        </header>
+        <br>
+        <div class="container">
+            <hr class="clearfix w-100">
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="/faqs"><button class="btn btn-primary">Συχνές Ερωτήσεις</button></a></li>
+                <li class="list-inline-item"><a href="/tutorials"><button class="btn btn-default">Tutorials</button></a></li>
+                <li class="list-inline-item"><a href="/terms"><button class="btn btn-default">Όροι και Προϋποθέσεις</button></a></li>
+                <li class="list-inline-item"><a href="/contact"><button class="btn btn-default">Επικοινωνία & Διαφήμιση</button></a></li>
+            </ul>
+            <hr class="clearfix w-100">
+        </div>
+        <br><br>
+        <div class="container" id="accordion">
+            <div class="row">
+                <h2 class="text-left">Συχνές Ερωτήσεις</h2>
+                <hr class="clearfix w-100">
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h1 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Τι είναι το Activ Radar;
+                    </button>
+                    </h1>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        Το Activ Radar είναι μια πλατφόρμα πληθωπορισμού που δημιουργήθηκε το Φεβρουάριο του 2019. Στόχος του είναι να δημιουργήσει μια διαδικτυακή τοποθεσία όπου οι χρήστες θα μπορούν να βρουν συγκεντρωμένες πληροφορίες σχετικά με αθλητικές (και όχι μόνο) δραστηριότητες σε οποιαδήποτε περιοχή τους ενδιαφέρει και να επιλέξουν αυτή που τους ταιριάζει, βάσει κριτηρίων όπως: τιμή, βαθμολογία χρηστών κ.α.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Από πού προέρχονται οι πληροφορίες της πλατφόρμας;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        Το Activ Radar είναι μια πλατφόρμα πληθωπορισμού. Δηλαδή, εσέις, οι χρήστες, είστε εκείνοι που παρέχετε τις πληροφορίες. Το Activ Radar δε συνεργάζεται με κανένα από τα αθλητικά κέντρα που εμφανίζονται στην πλατφόρμα, ούτε έχει σκοπό να προωθήσει κάποια δραστηριότητα / αθλητικό κέντρο παραπάνω από κάποιο άλλο. Οι δραστηριότητες και τα κέντρα που αναφέρονται εξαρτώνται από τις πληροφορίες που εισάγετε εσείς, οι χρήστες!
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Πώς εξασφαλίζεται η εγκυρότητα των πληροφοριών;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        Αυτό είναι ακόμα ένα θέμα των πλατφόρμων πληθωπορισμού: δεν μπορούμε να σιγουρέψουμε ότι τα δεδομένα που εισάγονται από τους χρήστες είναι έγκυρα. Και πάλι, εσείς, οι χρήστες μπορείτε να αναφέρετε τα λανθασμένα δεδομένα και εμείς θα φροντίσουμε για την ενημέρωση ή την αφαίρεσή τους.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h4 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="text-align: center; margin: auto; white-space: normal; height: 60px; vertical-align: middle;">
+                    Ποιος έφτιαξε το Activ Radar και γιατί;
+                    </button>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                    <div class="card-body">
+                        Το Activ Radar δημιουργήθηκε από την ομάδα φοιτητών "AShopping*" που αποτελείται από τους: Αρβανίτη Χρήστο, Βακαλοπούλου Μυρσίνη, Δαζέα Έλενα, Ζωιτάκη Χαρά, Λιάρτη Ιάσονα και Μπαγάκη Μάνο. Δημιουργήθηκε ως εργασία για το μάθημα Τεχνολογία Λογισμικού, της Ροής Λογισμικού, της σχολής ΗΜΜΥ του ΕΜΠ, κατά το 9ο εξάμηνο των σπουδών τους, το ακαδημαϊκό έτος 2018-2019.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <%- include('./includes/html/footer.ejs'); %>
+    </body>
+</html>
